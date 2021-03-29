@@ -1,4 +1,0 @@
-flask
-gpiozero
-numpy
-matplotlib
