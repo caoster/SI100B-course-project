@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Home Page</title>
+        <style>
+            html{
+                width:100%; 
+	            height:100%; 
+                background:-webkit-gradient(linear, 0%/*right*/0%/*bottom*/, 100%/*left*/ 100%/*top*/,from(#fbf201), to(#fbf201));
+                background-repeat: no-repeat;
+            }
+            body{
+                margin:0 auto;
+                margin-top: 25px;
+                width: 600px;
+                height: 600px;
+                padding: 1em;
+                border: 0px solid #CCC;
+                border-radius: 2em;
+                box-shadow: 1px 1px 5px #000000;
+                background: rgba(32, 31, 31, 0.3);
+            }
+            label{
+                display: inline-block;
+                width: 200px;
+                text-align: left;
+            }
+            h1{
+                font-size:xx-large;
+                margin: 0 auto;
+                width: max-content;
+                color:rgb(0, 0, 0);
+            }
+            p{
+                margin: 0 auto;
+                width: fit-content;
+                line-height: 1;
+                color:#132412;
+            }
+            input{
+                background: rgba(255, 255, 255, 0.5);
+                height: 22px;
+                width: 210px;
+                border: 0px oldlace;
+                border-radius: 0.2em;
+                box-shadow: 1px 1px 2px #000000 inset;
+            }
+            .datas{
+                color:#132412;
+                filter:alpha(Opacity=100);
+                -moz-opacity:1;
+                opacity: 1
+            }
+            button{
+                width: 200px;
+                height: 40px;
+                border: brown;
+                border-radius: 5em;
+                font-weight: 1000;
+                box-shadow: 1px 1px 5px #000000 inset;
+                background-color: #fbf201;
+            }
+            button:hover{
+                width: 200px;
+                height: 40px;
+                border: brown;
+                border-radius: 5em;
+                font-weight: 1000;
+                box-shadow: 1px 1px 5px #000000 inset;
+                background-color: rgba(55, 151, 186, 0.9);
+            }
+            select{
+                background: rgba(255, 255, 255, 0.5);
+                height: 22px;
+                width: 210px;
+                border: 0px oldlace;
+                border-radius: 0.2em;
+                box-shadow: 1px 1px 2px #000000 inset;
+            }
+        </style>
+    </head>
+    <div style="text-decoration:line-through" >其实也没啥，就是放个图测试一下心里承受能力</div>
+    <body>
+        <div>
+            <p><br /></p>
+            <p><br /></p>
+            <h1>赛破碰磕飞机场</h1>
+            <p>
+                <br />
+                当前中心点坐标：（{{data1}}°{{direction1}}，{{data2}}°{{direction2}}）<br />
+                <br />
+                当前西北点坐标：（{{data3}}°{{direction3}}，{{data4}}°{{direction4}}）<br />
+                <br />
+                当前爬取数据时间间隔：{{data5}}<br />
+                <br />
+                当前LED闪烁含义：{{data6}}<br />
+                <br />
+            </p>
+            <p><br /></p>
+            <form action="" name="data" enctype="multipart/form-data">
+                <center>
+                <p style="color: red" >{{error}}</p>
+                <div class="datas">
+                    <label for="data_loc_lat"> 中心点纬度: </label>
+                    <input name="data_loc_lat" placeholder="-90到90之间，北纬为正" id="data_loc_lat" value="{{data1}}" onFocus="if(value==defaultValue){value='';style.color='#000'}" onchange="whethervalid1(value)" onBlur="if((new RegExp('^[ ]*$')).test(value)){value=defaultValue;style.color='#999'}" style.color = "#999;">
+                </div>
+                <div class="datas">
+                    <label for="data_loc_lon"> 中心点经度: </label>
+                    <input name="data_loc_lon" placeholder="-180到180之间，东经为正" id="data_loc_lon" value="{{data2}}" onFocus="if(value==defaultValue){value='';style.color='#000'}" onchange="whethervalid2(value)" onBlur="if((new RegExp('^[ ]*$')).test(value)){value=defaultValue;style.color='#999'}" style.color = "#999;">
+                </div>
+                <div class="datas">
+                    <label for="data_rng_lat"> 西北点纬度: </label>
+                    <input name="data_rng_lat" placeholder="中心点纬度到90之间，北纬为正" id="data_rng_lat" value="{{data3}}" onFocus="if(value==defaultValue){value='';style.color='#000'}" onchange="whethervalid3(value)" onBlur="if((new RegExp('^[ ]*$')).test(value)){value=defaultValue;style.color='#999'}" style.color = "#999;">
+                </div>
+                <div class="datas">
+                    <label for="data_rng_lon"> 西北点经度: </label>
+                    <input name="data_rng_lon" placeholder="中心点经度到180之间，东经为正" id="data_rng_lon" value="{{data4}}" onFocus="if(value==defaultValue){value='';style.color='#000'}" onchange="whethervalid4(value)" onBlur="if((new RegExp('^[ ]*$')).test(value)){value=defaultValue;style.color='#999'}" style.color = "#999;">
+                </div>
+                <div class="datas">
+                    <label for="interval"> 爬取数据时间间隔：</label>
+                    <input name="interval" placeholder="大于等于十秒" id="interval" value="{{data5}}" onFocus="if(value==defaultValue){value='';style.color='#000'}" onchange="whethervalid5(value)" onBlur="if((new RegExp('^[ ]*$')).test(value)){value=defaultValue;style.color='#999'}" style.color = "#999;">
+                </div>
+                <div class="datas">
+                    <label for="model_selection"> 请选择LED闪烁含义：</label>
+                    <select name="model" id="model">
+                        <option value="1" selected>表示飞机密度</option>
+                        <option value="2">表示地速大于100的飞机数量</option>
+                        <option value="3">表示高度大于5000的飞机数量</option>
+                    </select>
+                <p><br /></p>
+                </div>
+                <button onclick="document.data.action='/config'; document.data.method='POST'; document.data.submit()" type="button">发送</button>
+                <button onclick="document.data.action='/vis'; document.data.method='GET'; document.data.submit()" type="button">图形界面</button>
+                </center>
+                <div>
+                    <script type="text/javascript">
+                    // var regu = new RegExp('^[A-Z]*$')
+                    // var regu1 = new RegExp('^.[\.]+$')
+                    // var regu2 = new RegExp('^[a-z]*$')
+                    function whethervalid1(val){
+                        var s1 = val;
+                        // if (s1.search(regu) || s1.search(regu1)){
+                        //     alert("输入错误");
+                        //     document.getElementById("data_loc_lat").value = '31'
+                        // }
+                        s1 = parseFloat(s1);
+                        if (s1<-90 || s1>90){
+                            alert("中心位置纬度错误");
+                            document.getElementById("data_loc_lat").value = '{{data1}}'
+                        }
+                    }
+                    function whethervalid2(val){
+                        var s1 = val;
+                        s1 = parseFloat(s1);
+                        if (s1<-180 || s1>180){
+                            alert("中心位置经度错误");
+                            document.getElementById("data_loc_lon").value = '{{data2}}'
+                        }
+                    }
+                    function whethervalid3(val){
+                        var s1 = val;
+                        s1 = parseFloat(s1);
+                        if (s1<parseFloat(document.getElementById("data_loc_lat").value) || s1>90){
+                            alert("左上角位置纬度错误");
+                            document.getElementById("data_rng_lat").value = '{{data3}}'
+                        }
+                    }
+                    function whethervalid4(val){
+                        var s1 = val;
+                        s1 = parseFloat(s1);
+                        if (s1>parseFloat(document.getElementById("data_loc_lon").value) || s1<-180){
+                            alert("左上角位置经度错误");
+                            document.getElementById("data_rng_lon").value = '{{data4}}'
+                        }
+                    }
+                    function whethervalid5(val){
+                        var s1 = val;
+                        s1 = parseFloat(s1);
+                        if (s1<10){
+                            alert("时间间隔错误");
+                            document.getElementById("interval").value = '{{data5}}'
+                        }
+                    }
+                    </script>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>
+
